@@ -22,7 +22,7 @@ class TwitterStreamer():
         auth.set_access_token(twitter_credentials.ACCESS_TOKEN,twitter_credentials.ACCESS_SECRET)
         stream = Stream(auth, listener)
 
-        stream.filter(track=tags,locations = [-180,-90,180,90])
+        stream.filter(track=tags)
 
 class TwitterListener(StreamListener):
     '''
@@ -38,7 +38,7 @@ class TwitterListener(StreamListener):
             if data['place']:
                 print(data['place']['country_code'])
                 with open(self.tweets_file,'a') as outfile:
-                    json.dump(data['place'],outfile)
+                    json.dump(data,outfile)
             
         except BaseException as e:
             print("Error on_data: %s" % str(e))
@@ -61,6 +61,8 @@ if __name__ == "__main__":
 
     twitter_streamer = TwitterStreamer()
     twitter_streamer.stream_tweets(tweets_file,tags)
+
+    
 
 
 
