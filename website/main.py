@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import requests
+from pymongo import MongoClient
+import pycountry
 
 app = Flask(__name__)
 
@@ -27,15 +29,12 @@ def team():
 
 @app.route("/world")
 def world():
-    worldData = [
-        ['Country', 'Popularity'],
-        ['Germany', 200],
-        ['United States', 300],
-        ['Brazil', 700],
-        ['Canada', 500],
-        ['France', 600],
-        ['RU', 700],
-      ]
+    db = MongoClient("mongodb+srv://dbuser:TCS-Consumerism@cluster0-tchxh.mongodb.net/<dbname>?retryWrites=true&w=majority").ConsumerismInsights
+    world_count = db.twitter.find_one({})
+    worldData = [['Country', 'Engagement']]
+    for key,value in world_count.items():
+        if len(key) == 2: #Only Country code is of length 2 in database
+            worldData.append([pycountry.countries.get(alpha_2=key).name,value])
     return render_template('world.html',worldData=worldData)
 
 
