@@ -4,6 +4,7 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 import pandas as pd
 import json
+import time
 from collections import defaultdict
 from datetime import datetime
 from pymongo import MongoClient
@@ -49,7 +50,7 @@ class TwitterListener(StreamListener):
     def on_data(self,data):
         try:
             data = json.loads(data)
-            if data['place']:
+            if data['place'] and data['place']['country_code'] != '':
                 self.count_data[data['place']['country_code']] = self.count_data[data['place']['country_code']]+1
 
             if int((datetime.now()-self.past_time).seconds) >= 60:
@@ -62,9 +63,11 @@ class TwitterListener(StreamListener):
 
     def on_error(self,status):
         if status == 420:
-            #To terminate when rate limit exceeds
-            return False
+            #To pause when rate limit exceeds
+            print('420 Error: Sleeping for 60 seconds')
+            time.sleep(60)
         print(status)
+        return True
 
 if __name__ == "__main__":
 

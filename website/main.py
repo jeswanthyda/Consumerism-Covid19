@@ -31,11 +31,12 @@ def team():
 def world():
     db = MongoClient("mongodb+srv://dbuser:TCS-Consumerism@cluster0-tchxh.mongodb.net/<dbname>?retryWrites=true&w=majority").ConsumerismInsights
     world_count = db.twitter.find_one({})
-    worldData = [['Country', 'Engagement']]
+    worldData = []
     for key,value in world_count.items():
         if len(key) == 2: #Only Country code is of length 2 in database
             worldData.append([pycountry.countries.get(alpha_2=key).name,value])
-    return render_template('world.html',worldData=worldData)
+    worldData = sorted(worldData,key=lambda x: x[1],reverse=True)
+    return render_template('world.html',worldData=[['Country', 'Engagement']]+worldData)
 
 
 
