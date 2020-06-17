@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{%block contentHead%}
+<script type= 'text/javascript' src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>        
+{%endblock%}
+
+
 {% block contentNavBar %}
 <a class="nav-link" href="/">Home</a>
 <a class="nav-link" href="team">Team</a>
@@ -10,7 +15,27 @@
 {% endblock %}
 
 {% block content %}
+<script src="{{url_for('static', filename='js/groupedBar.js')}}"></script>
 
-All plots and insightful statements and findings go here.
+
+<canvas id="{{paramsBig['documentID']}}"></canvas>
+<script>plotGroupedBar({{paramsBig|tojson}} ,"{{paramsBig['documentID']}}")</script>
+
+<div class="row justify-content-center align-items-center" style="padding-top: 50px;">
+{% for plot in paramsSmall %}
+    <div class="card" style="width: 40rem; ">
+        <canvas id="{{plot['documentID']}}"></canvas>
+        <div class="card-body">
+            <h5 class="card-title">{{plot['documentID']}}</h5>
+            <p class="card-text">
+                Text Here!
+            </p>
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+        </div>
+    </div>
+    <script>plotGroupedBar({{plot|tojson}} ,"{{plot['documentID']}}")</script>
+{% endfor %}
+</div>
+
 
 {% endblock %}

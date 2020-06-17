@@ -2,8 +2,23 @@ from flask import Flask, render_template, request
 import requests
 from pymongo import MongoClient
 import pycountry
+from collections import defaultdict
 
 app = Flask(__name__)
+
+class MDB():
+
+    def __init__(self):
+        self.db = MongoClient("mongodb+srv://dbuser:TCS-Consumerism@cluster0-tchxh.mongodb.net/<dbname>?retryWrites=true&w=majority").ConsumerismInsights
+        self.plots = self.db.plots
+
+    def getGroupedBarData(self,documentIDs):
+        params = []
+        for docID in documentIDs:
+            params.append(self.plots.find_one({'documentID':docID},{'_id': False}))
+        return params
+
+database = MDB()
 
 @app.route("/")
 def coverPage():
@@ -11,7 +26,11 @@ def coverPage():
 
 @app.route("/insights")
 def insights():
-    return render_template('insights.html')
+    documentIDsBig = ['persoanl_interpretation']
+    documentIDsSmall = ['consumerism','gender','country','education','profession','residence','family_size','household_income_pa']
+    paramsSmall = database.getGroupedBarData(documentIDs=documentIDsSmall)
+    paramsBig = database.getGroupedBarData(documentIDs=documentIDsBig)
+    return render_template('insights.html',paramsSmall=paramsSmall,paramsBig=paramsBig[0])
 
 
 @app.route("/consumerism")
