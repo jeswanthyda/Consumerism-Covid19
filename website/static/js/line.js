@@ -12,6 +12,7 @@ function plotLineChart(plot_params,plotID) {
     console.log(plot_params['datasets'][industryIndex])
 
     var options = {
+        events: [],
         scales: {
             yAxes: [{
                 ticks: {

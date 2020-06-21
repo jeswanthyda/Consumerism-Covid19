@@ -107,10 +107,8 @@
         <div class="carousel-item" style="padding:0% 10%">
         {% endif %}
             <canvas id="{{plot['documentID']}}"></canvas>
-            <!-- <div class="carousel-caption d-none d-md-block"> -->
                 <h6>{{plot['title']}}</h6>
                 <p>{{plot['text']}}</p>
-              <!-- </div> -->
         </div>
         <script>plotScoresBar({{plot|tojson}} ,"{{plot['documentID']}}")</script>
     {% endfor %}
@@ -125,30 +123,28 @@
     </a>
   </div>
 
-
   <!-- News Sentiment Line Charts -->
   <h4 style=" padding-top:4%">Industry Sentiment</h4>
   <p>Plots below show sentiment towards selected industry according to News articles from 17th May to 17th June 2020.</p>
 <div style="border:1px solid black;margin: auto; width:60%; padding:1% 5%;">
 
-    <!-- onchange='plotLineChart({{paramsNews|tojson}},"newsSentiment")' -->
-<form action="#" onsubmit='plotLineChart({{paramsNews|tojson}},"newsSentiment");;return false'>
-    <select id="industryLine">
+
+    <select id="industryLine" onchange='plotLineChart({{paramsNews|tojson}},"newsSentiment");'>
         {% for i in range(11) %}
         <option id="" value={{i}}>{{paramsNews['datasets'][i]['label']}}</option>
         {% endfor %}
     </select>
-    <input type="submit">
-</form>
+
     <canvas id="{{paramsNews['documentID']}}"></canvas>
     <script>plotLineChart({{paramsNews|tojson}},"newsSentiment")</script>
-    <h6>Title Here</h6>
+    <h6>Patterns</h6>
     <p>
-        <li>Positive sentiment can be observed for Online Service Industry, Media and Entertainment Industry, Real Estate Industry</li>
-        <li>Recent Positive sentiment can be observed in Consumer Apparel Industry</li>
+        <li>Highly positive sentiment can be observed for Online Service Industry, Media and Entertainment Industry, Real Estate Industry</li>
+        <li>Recent Positive sentiment can be observed in Consumer Apparel Industry and Technology Products</li>
+        <li>Food and Staples Retail, Banking, Capital goods, Education and Insurance are highly fluctuating.</li>
+        <li>Health Care shows positive trend from 1st June 2020</li>
     </p>
 </div>
-
 
 <div class="row justify-content-center align-items-center" style="padding-top: 6%;">
 {% for plot in paramsStaticSmall %}
@@ -159,14 +155,10 @@
             <p class="card-text">
                 {{plot['text']}}
             </p>
-            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
         </div>
     </div>
     <script>plotGroupedBar({{plot|tojson}} ,"{{plot['documentID']}}")</script>
 {% endfor %}
 </div>
-
-
-
 
 {% endblock %}
