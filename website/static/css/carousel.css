@@ -1,0 +1,23 @@
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 50px;
+  width: 50px;
+  outline: rgba(14, 50, 207,0.3);
+  background-size: 100%, 100%;
+  border-radius: 10%;
+  border: 1px solid rgba(14, 50, 207,0.3);
+  background-image: none;
+}
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 27.5px;
+  color: rgba(14, 50, 207,0.3);
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 27.5px;
+  color: rgba(14, 50, 207,0.3);
+}

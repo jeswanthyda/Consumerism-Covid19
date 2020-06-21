@@ -8,27 +8,156 @@
 {% block contentNavBar %}
 <a class="nav-link" href="/">Home</a>
 <a class="nav-link" href="team">Team</a>
-<a class="nav-link" href="consumerism">Consumerism</a>
+<a class="nav-link" href="Introduction">Introduction</a>
+<a class="nav-link" href="approach">Approach</a>
 <a class="nav-link active" href="insights">Insights</a>
 <a class="nav-link" href="world">World</a>
-<a class="nav-link" href="approach">Approach</a>
+<a class="nav-link" href="acknowledgement">Acknowledgement</a>
 {% endblock %}
 
 {% block content %}
+
+
 <script src="{{url_for('static', filename='js/groupedBar.js')}}"></script>
+<script src="{{url_for('static', filename='js/scoresBar.js')}}"></script>
+<script src="{{url_for('static', filename='js/line.js')}}"></script>
+<link href="{{url_for('static', filename='css/carousel.css')}}" rel="stylesheet">
+
+<h4 style=" padding-top:2%">Exploration of Cluster Features</h4>
+
+<!-- CLUSTER Carousel -->
+<p>Plots below show the percentage distribution across each response per cluster. Values are grouped based on the response for comparison.</p>
+  <div id="clusterCarousel" class="carousel slide" data-ride="carousel" data-interval="15000" style="border:1px solid black; margin: auto; width:60%; padding-top:2%">
+      
+    <div class="carousel-inner">
+        {% for plot in paramsSmall %}
+        {% if plot['documentID'] == "consumerism" %}
+        <div class="carousel-item active" style="padding:0% 10%">
+        {% else %}
+        <div class="carousel-item" style="padding:0% 10%">
+        {% endif %}
+            <canvas id="{{plot['documentID']}}"></canvas>
+            <!-- <div class="carousel-caption d-none d-md-block"> -->
+                <h6>{{plot['title']}}</h6>
+                <p>{{plot['text']}}</p>
+              <!-- </div> -->
+        </div>
+        <script>plotGroupedBar({{plot|tojson}} ,"{{plot['documentID']}}")</script>
+    {% endfor %}
+    </div>
+    <a class="carousel-control-prev" href="#clusterCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#clusterCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+<!-- Personal Interpretation -->
+<div  style="margin:auto; width:75%; padding-top:4%">
+    <canvas id="{{paramsBig['documentID']}}"></canvas>
+    <script>plotGroupedBar({{paramsBig|tojson}} ,"{{paramsBig['documentID']}}","horizontalBar")</script>
+    <h6>{{paramsBig['title']}}</h6>
+    <p>{{paramsBig['text']}}</p>
+</div>
 
 
-<canvas id="{{paramsBig['documentID']}}"></canvas>
-<script>plotGroupedBar({{paramsBig|tojson}} ,"{{paramsBig['documentID']}}")</script>
+<!-- SCORES Carousel -->
+<h4 style=" padding-top:6%">Inferences</h4>
+<p>Plots below show the average score across responses and clusters. Scores are grouped based on the response for comparison.</p>
+    <br>
+    <table class="table" style="width: 40%; margin:auto;">
+        <thead>
+          <tr>
+            <th scope="col">Response</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row">Increased significantly / Strongly agree</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td scope="row">Increased slightly / Lightly agree</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td scope="row">Remain constant / Cannot say / Neither agree nor disagree</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td scope="row">Decreased slightly / Lightly disagree</td>
+                <td>-1</td>
+            </tr>
+            <tr>
+                <td scope="row">Decreased significantly / Strongly disagree</td>
+                <td>-2</td>
+            </tr>
+        </tbody>
+      </table>
+<div id="scoresCarousel" class="carousel slide" data-ride="carousel" data-interval="15000" style="border:1px solid black;margin: auto; width:60%;">
+    <div class="carousel-inner">
+        {% for plot in paramsScores %}
+        {% if plot['documentID'] == "industry_scores" %}
+        <div class="carousel-item active" style="padding:0% 10%">
+        {% else %}
+        <div class="carousel-item" style="padding:0% 10%">
+        {% endif %}
+            <canvas id="{{plot['documentID']}}"></canvas>
+            <!-- <div class="carousel-caption d-none d-md-block"> -->
+                <h6>{{plot['title']}}</h6>
+                <p>{{plot['text']}}</p>
+              <!-- </div> -->
+        </div>
+        <script>plotScoresBar({{plot|tojson}} ,"{{plot['documentID']}}")</script>
+    {% endfor %}
+    </div>
+    <a class="carousel-control-prev" href="#scoresCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#scoresCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
 
-<div class="row justify-content-center align-items-center" style="padding-top: 50px;">
-{% for plot in paramsSmall %}
-    <div class="card" style="width: 40rem; ">
+
+  <!-- News Sentiment Line Charts -->
+  <h4 style=" padding-top:4%">Industry Sentiment</h4>
+  <p>Plots below show sentiment towards selected industry according to News articles from 17th May to 17th June 2020.</p>
+<div style="border:1px solid black;margin: auto; width:60%; padding:1% 5%;">
+
+    <!-- onchange='plotLineChart({{paramsNews|tojson}},"newsSentiment")' -->
+<form action="#" onsubmit='plotLineChart({{paramsNews|tojson}},"newsSentiment");;return false'>
+    <select id="industryLine">
+        {% for i in range(11) %}
+        <option id="" value={{i}}>{{paramsNews['datasets'][i]['label']}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit">
+</form>
+    <canvas id="{{paramsNews['documentID']}}"></canvas>
+    <script>plotLineChart({{paramsNews|tojson}},"newsSentiment")</script>
+    <h6>Title Here</h6>
+    <p>
+        <li>Positive sentiment can be observed for Online Service Industry, Media and Entertainment Industry, Real Estate Industry</li>
+        <li>Recent Positive sentiment can be observed in Consumer Apparel Industry</li>
+    </p>
+</div>
+
+
+<div class="row justify-content-center align-items-center" style="padding-top: 6%;">
+{% for plot in paramsStaticSmall %}
+    <div class="card" style="width: 40%; ">
         <canvas id="{{plot['documentID']}}"></canvas>
         <div class="card-body">
-            <h5 class="card-title">{{plot['documentID']}}</h5>
+            <h5 class="card-title">{{plot['title']}}</h5>
             <p class="card-text">
-                Text Here!
+                {{plot['text']}}
             </p>
             <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
         </div>
@@ -36,6 +165,8 @@
     <script>plotGroupedBar({{plot|tojson}} ,"{{plot['documentID']}}")</script>
 {% endfor %}
 </div>
+
+
 
 
 {% endblock %}

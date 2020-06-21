@@ -3,14 +3,224 @@
 {% block contentNavBar %}
 <a class="nav-link" href="/">Home</a>
 <a class="nav-link" href="team">Team</a>
-<a class="nav-link" href="consumerism">Consumerism</a>
+<a class="nav-link" href="Introduction">Introduction</a>
+<a class="nav-link active" href="approach">Approach</a>
 <a class="nav-link" href="insights">Insights</a>
 <a class="nav-link" href="world">World</a>
-<a class="nav-link active" href="approach">Approach</a>
+<a class="nav-link" href="acknowledgement">Acknowledgement</a>
 {% endblock %}
 
 {% block content %}
 
-All plots and insightful statements and findings go here.
+<div id="accordion"  style="width: 75%; margin:auto; padding-top: 10px">
+    <div class="card">
+        <div class="card-header" id="architecture">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#architectureCollapse" aria-expanded="true" aria-controls="architectureCollapse">
+            Architecture
+            </button>
+          </h5>
+        </div>
+    
+        <div id="architectureCollapse" class="collapse show" aria-labelledby="architectureCollapse" data-parent="#accordion">
+          <div class="card-body">
+            <img src="{{url_for('static', filename='media/architecture.jpg')}}" alt="Card image cap" style="margin:auto; width:70%">
+          </div>
+        </div>
+      </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Data Source
+            </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <p>
+                    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#surveyData" aria-expanded="false" aria-controls="surveyData">
+                        Survey
+                    </button>
+                    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#twitterData" aria-expanded="false" aria-controls="twitterData">
+                        Twitter 
+                    </button>
+                    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#newsData" aria-expanded="false" aria-controls="newsData">
+                        News feed 
+                    </button>
+                  </p>
+                  <div class="collapse" id="surveyData">
+                    <div class="card card-body">
+                        Of course! The survey data is one of our main sources. There were around 260 responses to the survey when we started the analysis of data.
+                        Thanks to all the people who participated in the survey.
+                    </div>
+                  </div>
+                  <div class="collapse" id="twitterData">
+                    <div class="card card-body">
+                        Tweets are a source to gauge and understand how well people around the world are engaging with topics of our interest. Leveraging this information provides insights on regional activity on Post-Consumerism.
+                    </div>
+                  </div>
+                  <div class="collapse" id="newsData">
+                    <div class="card card-body">
+                        News says a lot about what is happening in the world and affects a lot of things starting from stocks to our daily newsletter reading schedule. News from companies like ABC News, Bloomberg, CBS News, Fortune and Fox News were collected with help of News API to check the sentiment of articles related to a set of industries.
+                    </div>
+                  </div>
+            </div>
+        </div>
+        </div>
+    <div class="card">
+    <div class="card-header" id="headingThree">
+        <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Survey Data Exploration
+        </button>
+        </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+        <div class="card-body">
+            Google forms displays a detailed analysis of the responses obtained for every question in the survey. This information is definitely useful. However, we wanted to explore the collected data in a different and interesting way. 
+            <br><br>
+            So, we divided the respondents into clusters based on their basic information (country, education) and their interpretation of the pandemic. Using K means clustering from the scikit-learn library and by considering the silhouette score of the various k values, we decided to move forward with two clusters. This is because a higher silhouette score implies better clustering. 
+            <br><br>
+            <img src="{{url_for('static', filename='media/clustering.png')}}" alt="Card image cap" style="margin:auto; width:70%">
+            <br>
+            We then moved on to analysing the responses for each cluster and compared them. The insights section shows all our observations in detail. 
+
+        </div>
+    </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingFour">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            Sentiment Analysis
+          </button>
+        </h5>
+      </div>
+      <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+        <div class="card-body">
+          News related to Covid-19 and any of the 11 industries that we explored has been scraped using NewsAPI from 17th May 2020 to 17th June 2020. Raw data has been cleaned and processed to generate date-wise text blobs for analysis.
+          <br>
+          <br>
+          VADER Sentiment Analyzer has been chosen for sentiment analysis due to its compatability towards media style texts. Sentiment score for each industry was calculated for each day to understand the impact of Covid. These results can be seen in Insights Sections.
+        <br><br>
+        <table class="table table-hover" style="height: 50%; margin:auto">
+            <thead>
+              <tr>
+                <th scope="col">Industry</th>
+                <th scope="col">Article Count</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Banks and Financial</td>
+                    <td>2466</td>
+                  </tr>
+                <tr>
+                    <td>Capital Goods</td>
+                    <td>1812</td>
+                  </tr>
+                <tr>
+                    <td>Consumer Apparel</td>
+                    <td>632</td>
+                  </tr>
+                <tr>
+                    <td>Online Service Platforms</td>
+                    <td>577</td>
+                  </tr>
+                <tr>
+                    <td>Education</td>
+                    <td>3100</td>
+                  </tr>
+                <tr>
+                    <td>Food and Staples Retail</td>
+                    <td>731</td>
+                  </tr>
+                <tr>
+                    <td>Health Care and Pharmaceuticals</td>
+                    <td>848</td>
+                  </tr>
+                <tr>
+                    <td>Insurance</td>
+                    <td>3098</td>
+                  </tr>
+                <tr>
+                    <td>Media and Entertainment</td>
+                    <td>1994</td>
+                  </tr>
+                <tr>
+                    <td>Real Estate</td>
+                    <td>2738</td>
+                  </tr>
+                <tr>
+                    <td>Technology</td>
+                    <td>951</td>
+                  </tr>
+                
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingFive">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            Trend Analysis 
+          </button>
+        </h5>
+      </div>
+      <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+        <div class="card-body">
+          A listener has been setup using tweepy python package and the application is running on cloud in real-time. Received tweets are filtered depending on hashtags which are related to different types of post-consumeristic mindsets. 
+          A stateful data pipeline has been deployed on 12th Hune 2020 to further extract location information from tweets and track country-wise engagement w.r.t post-consumerism.
+          <br><br>
+          Keywords: 
+          <br><a style="font-weight: bold;">1.Life Simpler:</a> 
+          #simplelife
+          #simple
+          #simpleliving
+          #minimalism
+          #simplicity
+          #simplelife
+          #livesimply
+          #ilivesimply
+          #simplylife
+          <br>
+          <a style="font-weight: bold;">2.Degrowth and Climate Activist:</a> 
+          #degrowth
+          #EcoMonday
+          #Cleantech
+          #Green
+          #Environment
+          #Ecofriendly
+          #wildlife
+          #nature
+          #savetheplanet
+          #climatechange
+          
+          <br>
+          <a style="font-weight: bold;">3.Conservationist: </a>
+          #reducewaste
+          #recycle
+          #reduce
+          #reuse
+          #reducereuserecycle
+          #sustainablefuture
+          #sustainability
+          #zerowaste
+          
+          <br>
+          <a style="font-weight: bold;">4.Remote Everything:</a> 
+          #urbanfarming
+          #declutter
+          #countrylife
+          #mothernature
+          #villagelife
+          #naturelife
+        </div>
+      </div>
+    </div>
+</div>
 
 {% endblock %}

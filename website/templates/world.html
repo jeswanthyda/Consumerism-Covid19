@@ -3,18 +3,29 @@
 {% block contentNavBar %}
 <a class="nav-link" href="/">Home</a>
 <a class="nav-link" href="team">Team</a>
-<a class="nav-link" href="consumerism">Consumerism</a>
+<a class="nav-link" href="Introduction">Introduction</a>
+<a class="nav-link" href="approach">Approach</a>
 <a class="nav-link" href="insights">Insights</a>
 <a class="nav-link active" href="world">World</a>
-<a class="nav-link" href="approach">Approach</a>
+<a class="nav-link" href="acknowledgement">Acknowledgement</a>
 {% endblock %}    
 
 {% block content %}
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="{{url_for('static', filename='js/world.js')}}"></script>
+
+    <p style="padding-top: 35px;">
+      The following visualization shows the count of tweets corresponding to each country that engage with post-consumerism. In a way, this provides the region-wise trend on post-consumerism.
+    </p>
+
     <script>displayWorld({{worldData|tojson}})</script>
     
     <div id="regions_div" style="margin:auto; width:70%"></div>
+    
+    <p style="padding-top: 35px;">
+      Listed below are 10 countries with highest engagement counts in real time.
+    </p>
+
     <table class="table table-hover">
         <thead>
           <tr>
@@ -33,6 +44,7 @@
             {% endfor %}
         </tbody>
       </table>
+      
 
 {% endblock %}
 

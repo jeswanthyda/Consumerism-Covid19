@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block contentNavBar %}
+<a class="nav-link" href="/">Home</a>
+<a class="nav-link" href="team">Team</a>
+<a class="nav-link active" href="Introduction">Introduction</a>
+<a class="nav-link" href="approach">Approach</a>
+<a class="nav-link" href="insights">Insights</a>
+<a class="nav-link" href="world">World</a>
+<a class="nav-link" href="acknowledgement">Acknowledgement</a>
+{% endblock %}
+
+{% block content %}
+
+<div id="accordion" style="width: 65%; margin:0 auto;">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Consumerism and Post-consumerism
+          </button>
+        </h5>
+      </div>
+  
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+            <p>
+                <a style="font-weight: bold;">Consumerism</a> is the idea that increasing consumption of goods and services purchased in the market is always a desirable goal and that a person's wellbeing and happiness depends fundamentally on obtaining consumer goods and material possessions.
+            </p>
+            <p>
+                <a style="font-weight: bold;">Post-consumerism</a> is a view or ideology that well-being, as distinct from material prominence, is the aim of life, and often suggesting that there is a growing willingness to assert such. Post-consumerism can also be viewed as moving beyond the current model of addictive consumerism.
+            </p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Why explore these?
+          </button>
+        </h5>
+      </div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+            <p>
+                Through the last several months, corona-virus is spreading relentlessly through the world creating a path of death and destruction – to human life & to the economy. But just like all past pandemics, world wars and depressions, our race will ultimately win this enduring war. At the same time, we will also evolve & reshape their lifestyles adapting to a 'new-normal'. 
+            </p>
+            <p>
+                Isn’t it interesting to know people’s opinions? To know their personal interpretation of the pandemic, what they think could be the new normal, variations (increase/decrease) in their spendings by industry, and what kind of post-consumerist they think they will be!
+            </p>
+            <p>
+                For this exact purpose, we associated with the other participants of the series to design a survey that would capture this exact information. Do check it out below!
+            </p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <h5 class="mb-0">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc1Skbrmx6DtWq332WK1Rxk6IOJlCK0_Ehw0IuJ361B3P6wsA/viewform?usp=sf_link\" target="blank" class="btn btn-primary">Survey</a>
+        </h5>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block contentNavBar %}
+<a class="nav-link" href="/">Home</a>
+<a class="nav-link" href="team">Team</a>
+<a class="nav-link" href="Introduction">Introduction</a>
+<a class="nav-link" href="approach">Approach</a>
+<a class="nav-link" href="insights">Insights</a>
+<a class="nav-link" href="world">World</a>
+<a class="nav-link active" href="acknowledgement">Acknowledgement</a>
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center" style="background: none;">
+    <h1 class="display-3">Thank You!</h1>
+    <p class="lead" style="padding-top: 20px;">
+        Our sincere thanks to the TCS A&I team for this opportunity - to get hands-on experience working on real-world data. This is particularly an exciting one month journey where we started with discussing why this is an interesting problem, to gathering some interesting questions and conducting the survey and then moving on to exploration and analysis of the survey data and other open-source data. 
+        
+        <br><br>
+        Special thanks to Hrishikesh (TCS Analytics & Insights - Head of Onshore Operations and BI Partner Alliances) and Vandana (TCS Recruitment Coordinator) who worked with us on all the sessions and made sure the journey was interesting and hassle-free. 
+        <br><br>
+        Thanks for checking out our work!
+        <br><br>
+        Cheers!</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-sm" href="team" role="button">Jeswanth and Swarna</a>
+          </p>
+    <hr>
+    <p>
+        References: <br> 
+        <a href="https://en.wikipedia.org/wiki/Post-consumerism" style="color: rgb(136, 61, 10);">Wikipedia</a>
+        <a href="https://www.investopedia.com/terms/i/industrygroup.asp" style="color: rgb(136, 61, 10);">Investopedia</a>
+        <a href="https://github.com/cjhutto/vaderSentiment" style="color: rgb(136, 61, 10);">VADER</a>
+        <a href="https://newsapi.org/" style="color: rgb(136, 61, 10);">NewsAPI</a>
+    </p>
+    
+  </div> 
+
+
+{% endblock %}

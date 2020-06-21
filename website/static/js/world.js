@@ -8,7 +8,7 @@ function displayWorld(visualizationData) {
 
         var options = {
             backgroundColor: '',
-            colorAxis: {minValue: 0,  colors: ['#00ffd5', '#0066ff']}
+            colorAxis: {  colors: ['#9ecae1', '3182bd']}
 
         };
 

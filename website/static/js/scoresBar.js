@@ -1,4 +1,4 @@
-function plotGroupedBar(plot_params,plotID,type='bar'){
+function plotScoresBar(plot_params,plotID,type='bar'){
     
     var ctx = document.getElementById(plotID);
     
@@ -18,8 +18,8 @@ function plotGroupedBar(plot_params,plotID,type='bar'){
             }],
             yAxes: [{
                 ticks: {
-                    min: 0,
-                    max: 100,
+                    min: -2,
+                    max: 2,
                 }
             }]
         }
