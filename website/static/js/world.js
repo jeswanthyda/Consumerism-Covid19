@@ -1,6 +1,7 @@
 function displayWorld(visualizationData) {
     
-    google.charts.load('current', {'packages':['geochart'],'mapsApiKey': 'ENTER YOUR GOOGLE API KEY HERE'});
+    var key = 'ADD Google Maps Java Script API KEY HERE'
+    google.charts.load('current', {'packages':['geochart'],'mapsApiKey': key});
     google.charts.setOnLoadCallback(drawRegionsMap);
     
     function drawRegionsMap() {

@@ -15,7 +15,8 @@ class MDB():
     def __init__(self):
         self.db = MongoClient("mongodb+srv://dbuser:TCS-Consumerism@cluster0-tchxh.mongodb.net/<dbname>?retryWrites=true&w=majority").ConsumerismInsights
         self.plots = self.db.plots
-        self.news = self.db.news   
+        self.news = self.db.news
+        self.twitter = self.db.twitter 
 
     def getGroupedBarData(self,documentIDs):
         params = []
@@ -49,29 +50,9 @@ class MDB():
             })
         return params
 
-    # def getIndustryBarData(self,documentIDs):
-    #     params = []
-    #     for docID in documentIDs:
-    #         data = self.plots.find_one({'documentID':docID},{'_id': False})
-    #         datasets = [
-    #             {
-    #                 'data': data['scores'],
-    #                 'backgroundColor': 'orange'
-    #             },
-    #         ]
-    #         params.append({
-    #             'documentID':docID,
-    #             'datasets':datasets,
-    #             'labels':data['labels']
-    #         })
-    #     return params
 
     def getNewsSentiment(self):
         datasets = []
-        # colours = ['rgb(255,255,0)','rgb(0,234,255)','rgb(170,0,255)',
-        #             'rgb(255,127,0)', 'rgb(191,255,0)', 'rgb(237,185,185)', 'rgb(185,215,237)',
-        #             'rgb(231,233,185)', 'rgb(220,185,237)', 'rgb(35,98,143)', 'rgb(143,106,35)'
-        #             ]
         industries = self.news.find({})
         for industry in industries:
             data = {
@@ -79,11 +60,23 @@ class MDB():
                 'fill': False,
                 'lineTension': 0.1,
                 'borderColor':'rgb(255,127,0)',
-                'data': list(industry['Title'])  #TODO: TRY TITLE and DESCRIPTION
+                'data': list(industry['Title'])
                 }
             datasets.append(data)
         plot_params = {'documentID':'newsSentiment','labels':list(industry['Date']), 'datasets':datasets}
         return plot_params
+    
+    def getWorldData(self):
+        world_count = self.twitter.find_one({})
+        worldData = []
+        for key,value in world_count.items():
+            if len(key) == 2: #Only Country code is of length 2 in database
+                try:
+                    worldData.append([pycountry.countries.get(alpha_2=key).name,value])
+                except:
+                    worldData.append([key,value])
+        worldData = sorted(worldData,key=lambda x: x[1],reverse=True)
+        return [['Country', 'Engagement']]+worldData
 
 
 database = MDB()
@@ -112,7 +105,9 @@ def insights():
     documentIDsScores = ['industry_scores','postcov_scores','postcov_scores_2']
     paramsScores = database.getGroupedBarData(documentIDs=documentIDsScores)
 
-    return render_template('insights.html',paramsStaticSmall=paramsStaticSmall,paramsSmall=paramsSmall,paramsBig=paramsBig[0],paramsNews=paramsNews,paramsScores=paramsScores)
+    worldData = database.getWorldData()
+
+    return render_template('insights.html',paramsStaticSmall=paramsStaticSmall,paramsSmall=paramsSmall,paramsBig=paramsBig[0],paramsNews=paramsNews,paramsScores=paramsScores,worldData=worldData)
 
 
 @app.route("/Introduction")
@@ -128,19 +123,9 @@ def approach():
 def team():
     return render_template('team.html')
 
-@app.route("/world")
-def world():
-    db = MongoClient("mongodb+srv://dbuser:TCS-Consumerism@cluster0-tchxh.mongodb.net/<dbname>?retryWrites=true&w=majority").ConsumerismInsights
-    world_count = db.twitter.find_one({})
-    worldData = []
-    for key,value in world_count.items():
-        if len(key) == 2: #Only Country code is of length 2 in database
-            try:
-                worldData.append([pycountry.countries.get(alpha_2=key).name,value])
-            except:
-                worldData.append([key,value])
-    worldData = sorted(worldData,key=lambda x: x[1],reverse=True)
-    return render_template('world.html',worldData=[['Country', 'Engagement']]+worldData)
+@app.route("/takeaway")
+def takeaway():
+    return render_template('takeaway.html')
 
 
 

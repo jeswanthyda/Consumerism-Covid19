@@ -44,10 +44,8 @@ class News():
 
 if __name__ == "__main__":
     
-    # key = 'c7cbeeb8111b4f97b052fd9441183f1f'
-    # key = '7d241a0335de4d7394d95d1acf471aad'
-    key = '35b15026724f41eaaf44d114dc30edf1'
-    # key = '8b28ac7492c94e6e886081d42968d6f6'
+    key = '' #News API Key
+    
     sectors = ['Banking Financial','Capital Goods','Consumer Apparel',
                 'Food Groceries','Health Care Pharmaceutical','Insurance ','Media Entertainment',
                 'Education','Real Estate','Technology Goods Products', 'e-commerce Online service platform']
